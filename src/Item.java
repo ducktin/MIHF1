@@ -12,6 +12,7 @@ public class Item{
 	public Item(int h, int w, int i) {
 		this.h = h;
 		this.w = w;
+		
 		this.index = i;
 	}
 	

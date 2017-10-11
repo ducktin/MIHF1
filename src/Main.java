@@ -8,17 +8,9 @@ import java.util.Scanner;
 public class Main {
     public static void  main(String [] args) {
         Baggage baggage = readInput();
-	    
-        baggage.calculateLayoutFFD();
-        
-        //baggage.printLayout();
-        
-	    /*System.out.println(baggage.getH() + ", " + baggage.getW());
-	    System.out.print("O:(");
-	    for (int i = 0; i < baggage.getItems().size(); i++) {
-		    System.out.print("("+baggage.getItems().get(i).getH()+", "+baggage.getItems().get(i).getW()+")");
-	    }
-	    System.out.println(")");*/
+	
+	    baggage.fit();
+	    baggage.printOutput();
     }
     
     private static Baggage readInput(){
@@ -33,7 +25,7 @@ public class Main {
 	    for (int i = 0; i < N; i++) {
 		    int h = reader.nextInt();
 		    int w = reader.nextInt();
-		    items.add(new Item(h,w));
+		    items.add(new Item(h, w, i + 1));
 	    }
 	
 	    Baggage baggage = new Baggage(baggageH, baggageW, items);
@@ -42,33 +34,4 @@ public class Main {
 	    return baggage;
     }
 	
-	/*class Baggage {
-		
-		private List<Item> items;
-		private int h;
-		private int w;
-		private int[][] layout;
-		
-		
-		public List<Item> getItems() {
-			return items;
-		}
-		
-		public Baggage(int h, int w) {
-			this.items = new ArrayList<>();
-			layout = new int[h][w];
-			this.h = h;
-			this.w = w;
-		}
-		
-		public void printLayout(){
-			for (int i = 0; i < h; i++) {
-				for (int j = 0; j < w; j++) {
-					System.out.print(layout[i][j]);
-					if (j+1 != w) System.out.print('\t');
-				}
-				System.out.println();
-			}
-		}
-	}*/
 }

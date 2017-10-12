@@ -2,26 +2,25 @@ import java.util.List;
 
 /**
  * Created by Tintin on 2017. 10. 11..
+ * Random thought
  */
 
 public class Baggage {
 	
-	private List<Item> items;
 	private int h;
 	private int w;
 	private Node root;
 	private int[][] output;
 	
-	public Baggage(int h, int w, List l) {
+	public Baggage(int h, int w) {
 		root = new Node(0, 0, h, w);
 		output = new int[h][w];
 		this.h = h;
 		this.w = w;
-		this.items = l;
 	}
 	
 	// FirstFitDecrement
-	public void fit() {
+	public void fit(List<Item> items) {
 		items.sort((o1, o2) -> Math.max(o2.getW(), o2.getH()) - Math.max(o1.getW(), o1.getH()));
 		//items.sort((o1, o2) -> o2.size() - o1.size());
 		

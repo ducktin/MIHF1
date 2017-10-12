@@ -1,5 +1,6 @@
 /**
  * Created by Tintin on 2017. 10. 11..
+ * Random thought
  */
 public class Item{
 	
@@ -16,7 +17,7 @@ public class Item{
 		this.index = i;
 	}
 	
-	public int getIndex() {
+	int getIndex() {
 		return index;
 	}
 	

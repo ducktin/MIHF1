@@ -1,5 +1,6 @@
 /**
  * Created by Tintin on 2017. 10. 11..
+ * Random thought
  */
 public class Node {
 	boolean used;

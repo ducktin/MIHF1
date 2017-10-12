@@ -5,6 +5,7 @@ import java.util.List;
  * Random thought
  */
 
+
 public class Baggage {
 	
 	private int h;
@@ -65,6 +66,7 @@ public class Baggage {
 			return null;
 	}
 	
+	//TODO: Find why packed on top.
 	private Node splitNode(Node node, int h, int w, Item item) {
 		for (int i = 0; i < h; i++) {
 			for (int j = 0; j < w; j++) {

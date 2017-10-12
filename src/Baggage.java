@@ -21,8 +21,7 @@ public class Baggage {
 	
 	// FirstFitDecrement
 	public void fit(List<Item> items) {
-		items.sort((o1, o2) -> Math.max(o2.getW(), o2.getH()) - Math.max(o1.getW(), o1.getH()));
-		//items.sort((o1, o2) -> o2.size() - o1.size());
+		sort(items);
 		
 		Node next = root;
 		for (int i = 0; i < items.size(); i++) {
@@ -33,12 +32,17 @@ public class Baggage {
 			if (next != null) {
 				item.setX(next.x);
 				item.setY(next.y);
-				next = splitNode(next, item.getH(), item.getW(), item);
+				next = splitNode(next, h, w, item);
 			} else {
 				i--;
 				item.rotate();
 			}
 		}
+	}
+	
+	private void sort(List<Item> items) {
+		//items.sort((o1, o2) -> Math.max(o2.getW(), o2.getH()) - Math.max(o1.getW(), o1.getH()));
+		items.sort((o1, o2) -> o2.size() - o1.size());
 	}
 	
 	private Node findNode(Node root, int h, int w) {

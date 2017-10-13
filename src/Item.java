@@ -13,7 +13,8 @@ public class Item{
 	public Item(int height, int width, int i) {
 		this.height = height;
 		this.width = width;
-		
+		this.x = -1;
+		this.y = -1;
 		this.index = i;
 	}
 	

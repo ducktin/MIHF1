@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,11 +21,31 @@ public class Baggage {
 		this.width = width;
 	}
 	
-	// FirstFitDecrement
+	// FirstFitDecrement, mohó
 	public void fit(List<Item> items) {
 		sort(items);
 		
-		Node next = root;
+		List<Item> usedItems = new ArrayList<>();
+		
+		for (int i = 0; i < items.size(); i++) {
+			Item item = items.get(i);
+			
+			// Try to find a place
+			boolean found = findPlace(item);
+			// If did not find, rotate and try again
+			if (!found) {
+				item.rotate();
+				found = findPlace(item);
+			}
+			if (found) {
+				usedItems.add(item);
+				addOutput(item);
+				// buildOutput(usedItems);
+			} else {
+				System.out.println("ERROR");
+			}
+		}
+		/*Node next = root;
 		for (int i = 0; i < items.size(); i++) {
 			Item item = items.get(i);
 			height = item.getHeight();
@@ -38,7 +59,40 @@ public class Baggage {
 				i--;
 				item.rotate();
 			}
+		}*/
+	}
+	
+	private void addOutput(Item item) {
+		for (int i = 0; i < item.getHeight(); i++) {
+			for (int j = 0; j < item.getWidth(); j++) {
+				output[item.getX() + j][item.getY() + i] = item.getIndex();
+			}
 		}
+	}
+	
+	private void buildOutput(List<Item> usedItems) {
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				output[height][width] = 0;
+			}
+		}
+		for (Item usedItem : usedItems) {
+			for (int i = 0; i < usedItem.getHeight(); i++) {
+				for (int j = 0; j < usedItem.getWidth(); j++) {
+					output[usedItem.getX() + j][usedItem.getY() + i] = usedItem.getIndex();
+				}
+			}
+		}
+	}
+	
+	private boolean findPlace(Item item) {
+		boolean found = false;
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				found = isFit(i, j, item);
+			}
+		}
+		return found;
 	}
 	
 	private void sort(List<Item> items) {
@@ -46,7 +100,7 @@ public class Baggage {
 		items.sort((o1, o2) -> o2.size() - o1.size());
 	}
 	
-	private Node findNode(Node root, int h, int w) {
+	/*private Node findNode(Node root, int h, int w) {
 		// Ha használva van, akkor rekurzió
 		if (root.used) {
 			Node next = this.findNode(root.down, h, w);
@@ -63,7 +117,7 @@ public class Baggage {
 		}
 		else
 			return null;
-	}
+	}*/
 	
 	/**
 	 * Checks if an item can be placed on the given coordinates
@@ -89,8 +143,7 @@ public class Baggage {
 		}
 		return true;
 	}
-	
-	//TODO: Find why packed on top.
+	/*
 	private Node splitNode(Node node, int h, int w, Item item) {
 		for (int i = 0; i < h; i++) {
 			for (int j = 0; j < w; j++) {
@@ -102,7 +155,7 @@ public class Baggage {
 		node.down = new Node(node.x, node.y + h, node.h - h, node.w);
 		node.right = new Node(node.x + w, node.y, h, node.w - w);
 		return node;
-	}
+	}*/
 	
 	public void printOutput() {
 		for (int i = 0; i < height; i++) {

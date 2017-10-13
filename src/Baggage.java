@@ -21,14 +21,19 @@ public class Baggage {
 		this.width = width;
 	}
 	
-	private void sort(List<Item> items) {
-		//items.sort((o1, o2) -> Math.max(o2.getWidth(), o2.getHeight()) - Math.max(o1.getWidth(), o1.getHeight()));
+	private void sort1(List<Item> items) {
 		items.sort((o1, o2) -> o2.size() - o1.size());
+	}
+	
+	private void sort2(List<Item> items) {
+		items.sort((o1, o2) -> Math.max(o2.getWidth(), o2.getHeight()) - Math.max(o1.getWidth(), o1.getHeight()));
 	}
 	
 	// FirstFitDecrement, mohó
 	public void fit(List<Item> items) {
-		sort(items);
+		boolean error = false;
+		
+		sort1(items);
 		
 		List<Item> usedItems = new ArrayList<>();
 		
@@ -48,23 +53,39 @@ public class Baggage {
 				// buildOutput(usedItems);
 			} else {
 				System.out.println("ERROR" + item);
+				printOutput();
+				error = true;
+			}
+			if (error) {
+				sort2(items);
+				clearOutput();
+				
+				found = findPlace(item);
+				// If did not find, rotate and try again
+				if (!found) {
+					item.rotate();
+					found = findPlace(item);
+				}
+				if (found) {
+					usedItems.add(item);
+					addOutput(item);
+					// buildOutput(usedItems);
+				} else {
+					System.out.println("ERROR" + item);
+					printOutput();
+					error = true;
+				}
+				
 			}
 		}
-		/*Node next = root;
-		for (int i = 0; i < items.size(); i++) {
-			Item item = items.get(i);
-			height = item.getHeight();
-			width = item.getWidth();
-			next = findNode(next, height, width);
-			if (next != null) {
-				item.setX(next.x);
-				item.setY(next.y);
-				next = splitNode(next, height, width, item);
-			} else {
-				i--;
-				item.rotate();
+	}
+	
+	private void clearOutput() {
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				output[i][j] = 0;
 			}
-		}*/
+		}
 	}
 	
 	

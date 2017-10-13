@@ -2,6 +2,23 @@
  * Created by Tintin on 2017. 10. 11..
  * Random thought
  */
+// in baggage
+/*Node next = root;
+		for (int i = 0; i < items.size(); i++) {
+			Item item = items.get(i);
+			height = item.getHeight();
+			width = item.getWidth();
+			next = findNode(next, height, width);
+			if (next != null) {
+				item.setX(next.x);
+				item.setY(next.y);
+				next = splitNode(next, height, width, item);
+			} else {
+				i--;
+				item.rotate();
+			}
+		}*/
+
 public class Node {
 	boolean used;
 	int index;

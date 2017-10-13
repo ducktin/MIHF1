@@ -4,15 +4,15 @@
  */
 public class Item{
 	
-	private int h;
-	private int w;
+	private int height;
+	private int width;
 	private int x;
 	private int y;
 	private int index;
 	
-	public Item(int h, int w, int i) {
-		this.h = h;
-		this.w = w;
+	public Item(int height, int width, int i) {
+		this.height = height;
+		this.width = width;
 		
 		this.index = i;
 	}
@@ -42,37 +42,37 @@ public class Item{
 	}
 	
 	public void rotate() {
-		int temp = this.h;
-        this.h = w;
-        this.w = temp;
-    }
+		int temp = this.height;
+		this.height = width;
+		this.width = temp;
+	}
 	
 	@Override
 	public String toString() {
 		return "Item{" +
-				"h=" + h +
-				", w=" + w +
+				"height=" + height +
+				", width=" + width +
 				", index=" + index +
 				'}';
 	}
 	
 	public int size(){
-        return h*w;
-    }
-
-    public int getH() {
-        return h;
-    }
-
-    public void setH(int h) {
-        this.h = h;
-    }
-
-    public int getW() {
-        return w;
-    }
-
-    public void setW(int w) {
-        this.w = w;
-    }
+		return height * width;
+	}
+	
+	public int getHeight() {
+		return height;
+	}
+	
+	public void setHeight(int height) {
+		this.height = height;
+	}
+	
+	public int getWidth() {
+		return width;
+	}
+	
+	public void setWidth(int width) {
+		this.width = width;
+	}
 }

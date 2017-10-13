@@ -8,16 +8,16 @@ import java.util.List;
 
 public class Baggage {
 	
-	private int h;
-	private int w;
+	private int height;
+	private int width;
 	private Node root;
 	private int[][] output;
 	
-	public Baggage(int h, int w) {
-		root = new Node(0, 0, h, w);
-		output = new int[h][w];
-		this.h = h;
-		this.w = w;
+	public Baggage(int height, int width) {
+		root = new Node(0, 0, height, width);
+		output = new int[height][width];
+		this.height = height;
+		this.width = width;
 	}
 	
 	// FirstFitDecrement
@@ -27,13 +27,13 @@ public class Baggage {
 		Node next = root;
 		for (int i = 0; i < items.size(); i++) {
 			Item item = items.get(i);
-			h = item.getH();
-			w = item.getW();
-			next = findNode(next, h, w);
+			height = item.getHeight();
+			width = item.getWidth();
+			next = findNode(next, height, width);
 			if (next != null) {
 				item.setX(next.x);
 				item.setY(next.y);
-				next = splitNode(next, h, w, item);
+				next = splitNode(next, height, width, item);
 			} else {
 				i--;
 				item.rotate();
@@ -42,7 +42,7 @@ public class Baggage {
 	}
 	
 	private void sort(List<Item> items) {
-		//items.sort((o1, o2) -> Math.max(o2.getW(), o2.getH()) - Math.max(o1.getW(), o1.getH()));
+		//items.sort((o1, o2) -> Math.max(o2.getWidth(), o2.getHeight()) - Math.max(o1.getWidth(), o1.getHeight()));
 		items.sort((o1, o2) -> o2.size() - o1.size());
 	}
 	
@@ -61,9 +61,33 @@ public class Baggage {
 			System.out.println("found one");
 			return root;
 		}
-			// Egyébként hiba
 		else
 			return null;
+	}
+	
+	/**
+	 * Checks if an item can be placed on the given coordinates
+	 *
+	 * @param x    coordinate x
+	 * @param y    coordinate y
+	 * @param item item to be checked
+	 * @return true if the item could be fitted, false otherwise
+	 */
+	private boolean isFit(int x, int y, Item item) {
+		int itemHeight = item.getHeight();
+		int itemWidth = item.getHeight();
+		
+		for (int i = 0; i < itemHeight; i++) {
+			for (int j = 0; j < itemWidth; j++) {
+				if (output[i][j] != 0) {
+					return false;
+				}
+			}
+		}
+		if (x + itemWidth > this.width || y + itemHeight > this.height) {
+			return false;
+		}
+		return true;
 	}
 	
 	//TODO: Find why packed on top.
@@ -81,10 +105,10 @@ public class Baggage {
 	}
 	
 	public void printOutput() {
-		for (int i = 0; i < h; i++) {
-			for (int j = 0; j < w; j++) {
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
 				System.out.print(output[i][j]);
-				if (j+1 != w) System.out.print('\t');
+				if (j + 1 != width) System.out.print('\t');
 			}
 			System.out.println();
 		}

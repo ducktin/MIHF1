@@ -21,6 +21,11 @@ public class Baggage {
 		this.width = width;
 	}
 	
+	private void sort(List<Item> items) {
+		items.sort((o1, o2) -> Math.max(o2.getWidth(), o2.getHeight()) - Math.max(o1.getWidth(), o1.getHeight()));
+		//items.sort((o1, o2) -> o2.size() - o1.size());
+	}
+	
 	// FirstFitDecrement, mohó
 	public void fit(List<Item> items) {
 		sort(items);
@@ -62,48 +67,23 @@ public class Baggage {
 		}*/
 	}
 	
-	private void addOutput(Item item) {
-		for (int i = 0; i < item.getHeight(); i++) {
-			for (int j = 0; j < item.getWidth(); j++) {
-				output[item.getX() + j][item.getY() + i] = item.getIndex();
-			}
-		}
-	}
-	
-	private void buildOutput(List<Item> usedItems) {
-		for (int i = 0; i < height; i++) {
-			for (int j = 0; j < width; j++) {
-				output[height][width] = 0;
-			}
-		}
-		for (Item usedItem : usedItems) {
-			for (int i = 0; i < usedItem.getHeight(); i++) {
-				for (int j = 0; j < usedItem.getWidth(); j++) {
-					output[usedItem.getX() + j][usedItem.getY() + i] = usedItem.getIndex();
-				}
-			}
-		}
-	}
 	
 	private boolean findPlace(Item item) {
 		boolean found = false;
-		for (int i = 0; i < height; i++) {
-			for (int j = 0; j < width; j++) {
-				found = isFit(j, i, item);
+		// Mindegyik elemet végignézzük sorfolytonosan
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				// Ha talált, akkor elmentjük a helyet és megállunk
+				found = isFit(x, y, item);
 				if (found) {
-					item.setX(j);
-					item.setY(i);
+					item.setY(y);
+					item.setX(x);
 					break;
 				}
 			}
 			if (found) break;
 		}
 		return found;
-	}
-	
-	private void sort(List<Item> items) {
-		//items.sort((o1, o2) -> Math.max(o2.getWidth(), o2.getHeight()) - Math.max(o1.getWidth(), o1.getHeight()));
-		items.sort((o1, o2) -> o2.size() - o1.size());
 	}
 	
 	/*private Node findNode(Node root, int h, int w) {
@@ -135,19 +115,42 @@ public class Baggage {
 	 */
 	private boolean isFit(int x, int y, Item item) {
 		int itemHeight = item.getHeight();
-		int itemWidth = item.getHeight();
+		int itemWidth = item.getWidth();
 		
+		if (x + itemWidth > this.width || y + itemHeight > this.height) {
+			return false;
+		}
 		for (int i = 0; i < itemHeight; i++) {
 			for (int j = 0; j < itemWidth; j++) {
-				if (output[x + j][y + i] != 0) {
+				if (output[y + i][x + j] != 0) {
 					return false;
 				}
 			}
 		}
-		if (x + itemWidth > this.width || y + itemHeight > this.height) {
-			return false;
-		}
 		return true;
+	}
+	
+	private void addOutput(Item item) {
+		for (int i = 0; i < item.getHeight(); i++) {
+			for (int j = 0; j < item.getWidth(); j++) {
+				output[item.getY() + i][item.getX() + j] = item.getIndex();
+			}
+		}
+	}
+	
+	private void buildOutput(List<Item> usedItems) {
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				output[i][j] = 0;
+			}
+		}
+		for (Item usedItem : usedItems) {
+			for (int i = 0; i < usedItem.getHeight(); i++) {
+				for (int j = 0; j < usedItem.getWidth(); j++) {
+					output[usedItem.getY() + i][usedItem.getX() + j] = usedItem.getIndex();
+				}
+			}
+		}
 	}
 	/*
 	private Node splitNode(Node node, int h, int w, Item item) {

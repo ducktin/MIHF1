@@ -89,10 +89,10 @@ public class Baggage {
 		boolean found = false;
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
-				found = isFit(i, j, item);
+				found = isFit(j, i, item);
 				if (found) {
-					item.setX(i);
-					item.setY(j);
+					item.setX(j);
+					item.setY(i);
 					break;
 				}
 			}
@@ -139,7 +139,7 @@ public class Baggage {
 		
 		for (int i = 0; i < itemHeight; i++) {
 			for (int j = 0; j < itemWidth; j++) {
-				if (output[x + i][y + j] != 0) {
+				if (output[x + j][y + i] != 0) {
 					return false;
 				}
 			}

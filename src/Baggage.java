@@ -22,8 +22,8 @@ public class Baggage {
 	}
 	
 	private void sort(List<Item> items) {
-		items.sort((o1, o2) -> Math.max(o2.getWidth(), o2.getHeight()) - Math.max(o1.getWidth(), o1.getHeight()));
-		//items.sort((o1, o2) -> o2.size() - o1.size());
+		//items.sort((o1, o2) -> Math.max(o2.getWidth(), o2.getHeight()) - Math.max(o1.getWidth(), o1.getHeight()));
+		items.sort((o1, o2) -> o2.size() - o1.size());
 	}
 	
 	// FirstFitDecrement, mohó
@@ -47,7 +47,7 @@ public class Baggage {
 				addOutput(item);
 				// buildOutput(usedItems);
 			} else {
-				System.out.println("ERROR");
+				System.out.println("ERROR" + item);
 			}
 		}
 		/*Node next = root;

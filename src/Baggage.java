@@ -11,11 +11,11 @@ public class Baggage {
 	
 	private int height;
 	private int width;
-	private Node root;
+	//private Node root;
 	private int[][] output;
 	
 	public Baggage(int height, int width) {
-		root = new Node(0, 0, height, width);
+		//root = new Node(0, 0, height, width);
 		output = new int[height][width];
 		this.height = height;
 		this.width = width;
@@ -90,7 +90,13 @@ public class Baggage {
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 				found = isFit(i, j, item);
+				if (found) {
+					item.setX(i);
+					item.setY(j);
+					break;
+				}
 			}
+			if (found) break;
 		}
 		return found;
 	}
@@ -133,7 +139,7 @@ public class Baggage {
 		
 		for (int i = 0; i < itemHeight; i++) {
 			for (int j = 0; j < itemWidth; j++) {
-				if (output[i][j] != 0) {
+				if (output[x + i][y + j] != 0) {
 					return false;
 				}
 			}
